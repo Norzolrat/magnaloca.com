@@ -1,0 +1,49 @@
+# ========================================
+# CONFIGURATION PROXMOX
+# ========================================
+
+# URL de l'API Proxmox (remplacer par votre IP/hostname)
+proxmox_api_url      = "https://YOUR-PROXMOX-IP:8006/api2/json"
+
+# Utilisateur Proxmox avec permissions appropriées
+proxmox_user         = "terraform@pve"
+
+# Token API Proxmox (à générer dans Datacenter > Permissions > API Tokens)
+# Format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+proxmox_token        = "YOUR-API-TOKEN-SECRET-HERE"
+
+# Mot de passe Proxmox (fallback si token ne fonctionne pas)
+proxmox_password     = "YOUR-PROXMOX-PASSWORD"
+
+# Nom du nœud Proxmox cible
+proxmox_node         = "pve"
+
+# Storage pour les disques des containers/VMs
+proxmox_storage      = "local-lvm"
+
+# Storage pour les templates (type Directory)
+proxmox_template_storage = "local"
+
+# Adresse IP/hostname du serveur Proxmox
+proxmox_host         = "YOUR-PROXMOX-IP"
+
+# ========================================
+# CONFIGURATION IMAGE LXC
+# ========================================
+
+# URL de téléchargement de votre image LXC depuis GitHub Releases
+# Cette URL est publique et peut rester telle quelle
+github_image_url     = "https://github.com/Norzolrat/magnaloca.com/releases/download/debian/debian-magnaloca.tar.xz"
+
+# Nom du fichier image (correspond au nom dans l'URL)
+image_name           = "debian-magnaloca.tar.xz"
+
+# ========================================
+# INSTRUCTIONS D'UTILISATION
+# ========================================
+
+# 1. Copier ce fichier: cp terraform.tfvars.example terraform.tfvars
+# 2. Remplacer toutes les valeurs YOUR-* par vos vraies valeurs
+# 3. Créer un token API dans Proxmox si pas encore fait
+# 4. Vérifier que votre image LXC est accessible via l'URL GitHub
+# 5. Lancer: terraform init && terraform plan && terraform apply
