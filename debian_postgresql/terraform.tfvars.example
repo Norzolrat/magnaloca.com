@@ -1,0 +1,121 @@
+# ========================================
+# CONFIGURATION PROXMOX
+# ========================================
+
+# URL de l'API Proxmox (remplacer par votre IP/hostname)
+proxmox_api_url      = "https://YOUR-PROXMOX-IP:8006/api2/json"
+
+# Utilisateur Proxmox avec permissions appropriées
+proxmox_user         = "terraform@pve"
+
+# Nom du token API (partie après le !)
+proxmox_token_name   = "terraform"
+
+# Secret du token API Proxmox (à générer dans Datacenter > Permissions > API Tokens)
+# Format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+proxmox_token        = "YOUR-API-TOKEN-SECRET-HERE"
+
+# Mot de passe Proxmox (fallback si token ne fonctionne pas)
+proxmox_password     = "YOUR-PROXMOX-PASSWORD"
+
+# Nom du nœud Proxmox cible
+proxmox_node         = "pve"
+
+# Storage pour les disques des containers/VMs
+proxmox_storage      = "local-lvm"
+
+# Storage pour les templates (type Directory)
+proxmox_template_storage = "local"
+
+# Adresse IP/hostname du serveur Proxmox
+proxmox_host         = "YOUR-PROXMOX-IP"
+
+# ========================================
+# CONFIGURATION DU CONTAINER
+# ========================================
+
+# Nom d'hôte du container LXC
+container_hostname   = "apache-lxc-700"
+
+# ID spécifique du container (optionnel, si omis Proxmox choisit automatiquement)
+container_id         = 700
+
+# Ressources allouées au container
+container_memory     = 1024    # RAM en MB
+container_cores      = 2       # Nombre de cœurs CPU
+container_swap       = 512     # Swap en MB
+container_disk_size  = "10G"   # Taille du disque
+
+# ========================================
+# CONFIGURATION RÉSEAU
+# ========================================
+
+# Bridge réseau Proxmox (adapter selon votre configuration)
+network_bridge       = "vmbr1"
+
+# Configuration IP du container (adapter à votre réseau)
+container_ip         = "YOUR-NETWORK.200/24"        # Ex: 192.168.1.200/24
+container_gateway    = "YOUR-NETWORK.254"           # Ex: 192.168.1.1
+container_ip_address = "YOUR-NETWORK.200"           # Ex: 192.168.1.200
+
+# Config Sécu
+enable_firewall      = true                         # Activer le firewall UFW
+allowed_networks     = ["YOUR-NETWORK.0/24"]            # Ex: ["192.168.1.0/24"]
+
+# ========================================
+# CONFIGURATION SSH
+# ========================================
+
+# Votre clé SSH publique (générer avec: ssh-keygen -t ed25519)
+# Récupérer avec: cat ~/.ssh/id_ed25519.pub
+ssh_public_keys      = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA... user@hostname"
+
+# Chemin vers votre clé privée SSH
+ssh_private_key_path = "~/.ssh/id_ed25519_terraform"
+
+# ========================================
+# CONFIGURATION CONSOLE
+# ========================================
+
+# Activer l'autologin root sur la console Proxmox
+enable_console_autologin = true
+
+# ========================================
+# CONFIGURATION CONSOLE
+# ========================================
+
+# Configuration des volumes Persistants
+postgres_data_size   = "20G"                       # Volume principal pour /var/lib/postgresql
+postgres_logs_size   = "2G"                        # Volume pour /var/log/postgresql
+enable_backup_volume = true                        # Créer un volume dédié aux sauvegardes (optionnel)
+postgres_backup_size = "10G"                       # Taille du volume de sauvegarde (optionnel)
+# Sauvegarde automatique
+enable_auto_backup    = true                       # Activer la sauvegarde automatique
+backup_schedule       = "0 2 * * *"                # Tous les jours à 2h du matin
+backup_retention_days = 7                          # Garder 7 jours de sauvegardes
+
+# Config POSTGRESQL
+postgres_version     = "15"
+postgres_root_password = "postgres"
+postgres_database_name = "postgres"
+postgres_app_user     = "postgres"
+postgres_app_password = "postgres"
+postgres_port         = 5432
+postgres_listen_addresses = "*"                    # Écouter sur toutes les interfaces
+
+postgres_max_connections = 100
+postgres_shared_buffers  = "512MB"                 # Environ 25% de la RAM
+
+
+
+# ========================================
+# INSTRUCTIONS D'UTILISATION
+# ========================================
+
+# 1. Copier ce fichier: cp terraform.tfvars.example terraform.tfvars
+# 2. Remplacer YOUR-* par vos vraies valeurs
+# 3. Adapter les IPs à votre réseau local
+# 4. Générer une paire de clés SSH si pas encore fait:
+#    ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_terraform
+# 5. Créer un token API dans Proxmox
+# 6. Lancer: terraform init && terraform plan && terraform apply

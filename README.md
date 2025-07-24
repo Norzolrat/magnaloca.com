@@ -57,7 +57,7 @@ L'utilisateur Terraform doit disposer des permissions suivantes :
 
 ### 1. Cloner le repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/Norzolrat/magnaloca.com
 cd magnaloca.com
 ```
 
