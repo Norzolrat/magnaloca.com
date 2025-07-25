@@ -147,12 +147,12 @@ magnaloca.com/
 - [x] Documentation et exemples
 
 ### Phase 2 : Services de base
-- [ ] Container de base de données (MySQL/PostgreSQL)
-- [ ] Container reverse proxy (Nginx)
+- [x] Container de base de données (PostgreSQL)
+- [x] Container reverse proxy (Traefik)
 - [ ] Gestion des volumes persistants
 
 ### Phase 3 : VM et Cloud-init
-- [ ] Images VM personnalisées avec Cloud-init
+- [x] Images VM personnalisées avec Cloud-init
 - [ ] Déploiement de VMs Ubuntu/Debian
 - [ ] Configuration automatique via Cloud-init
 
